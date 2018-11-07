@@ -1,7 +1,3 @@
-.App {
-  text-align: center;
-}
-
 .App-logo {
   animation: App-logo-spin infinite 20s linear;
   height: 40vmin;
@@ -29,4 +25,52 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.header {
+  background: #435d7d !important;
+}
+
+.color_white{
+  color: white !important;
+}
+
+.btn{
+  padding: 0.250rem .75rem !important;
+}
+
+@keyframes fadein {
+  from {
+      opacity:0;
+  }
+  to {
+      opacity:1;
+  }
+}
+
+.fadeIn{
+  animation: fadein 0.8s;
+}
+
+input {
+  margin-bottom: 1rem;
+  display: block;
+}
+
+textarea {
+  margin-bottom: 1rem;
+  display: block;
+}
+
+select {
+  margin-bottom: 1rem;
+  display: block;
+}
+
+a:hover {
+  text-decoration: none !important;
+}
+
+.titulo_table{
+  text-transform: uppercase;
 }
