@@ -13,7 +13,8 @@ class App extends Component {
           <Header />
           
           <Route path="/lancamentos"            exact={true} component={ListLancamentos} />
-          <Route path="/lancamentos/edit/"                component={FormLancamentos} />
+          <Route path="/lancamentos/novo/"                   component={FormLancamentos} />
+          <Route path="/lancamentos/edit/:id"                component={FormLancamentos} />
         </div>
       </Router>
     );
