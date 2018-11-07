@@ -30,9 +30,19 @@ export function replaceAll(string, token, newtoken) {
     return string;
 }
 
+export function valorFormatoBrasileiro(valor) {
+    valor = Number(valor).toFixed(2);
+    valor = valor.toString().replace(/\D/g,"");
+    valor = valor.toString().replace(/(\d)(\d{8})$/,"$1.$2");
+    valor = valor.toString().replace(/(\d)(\d{5})$/,"$1.$2");
+    valor = valor.toString().replace(/(\d)(\d{2})$/,"$1,$2");
+    return valor                    
+}
+
 export interface InputMoneyProps {
     name: string;
     placeholder?: string;
+    label? :string;
 }
 
 const formatPrice = value => {
@@ -48,6 +58,7 @@ export default class InputMoney extends React.Component<InputMoneyProps, any> {
   public render() {
     return (
         <div>
+            <label htmlFor={this.props.name}>{this.props.label}</label>
             <Field name={this.props.name} component="input" className="form-control" type="text" format={formatPrice} formatOnBlur placeholder={this.props.placeholder} />
         </div>
     );
