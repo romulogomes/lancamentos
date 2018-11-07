@@ -9,17 +9,17 @@ class LancamentoService {
         return axios.get(this.url_lancamentos);
     }
     
-    // getInfosAluno(idAluno : number): AxiosPromise{
-    //     return axios.get(this.url_lancamentos + idAluno);
-    // }
+    getInfosLancamento(idLancamento : number): AxiosPromise{
+        return axios.get(this.url_lancamentos + idLancamento);
+    }
     
-    // gravaAluno(data: any): AxiosPromise{
-    //     return axios.post( this.url_lancamentos, data);
-    // }
+    gravaLancamento(data: any): AxiosPromise{
+        return axios.post( this.url_lancamentos, data);
+    }
     
-    // editAluno(data : any): AxiosPromise{
-    //     return axios.put(this.url_lancamentos, data);
-    // }
+    editarLancamento(data : any): AxiosPromise{
+        return axios.put(this.url_lancamentos, data);
+    }
     
     removeLancamento(idLancamento : number): AxiosPromise{
         return axios.delete(this.url_lancamentos+idLancamento);
