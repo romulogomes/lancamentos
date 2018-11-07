@@ -3,6 +3,7 @@ import LancamentoService from './Service'
 import Table, { DadosTabela } from '../Table';
 import Titulo from '../Titulo';
 import { Link } from 'react-router-dom';
+import { valorFormatoBrasileiro } from '../InputMoney';
 
 export interface ListLancamentosProps {
 }
@@ -20,7 +21,6 @@ export interface Lancamento {
     conta_debito: Conta | number;
     valor : number;
     historico? : string;
-
 }
 
 export interface State {
@@ -40,7 +40,6 @@ export default class ListLancamentos extends React.Component<ListLancamentosProp
         }
 
         this.setLancamentoSelecionado = this.setLancamentoSelecionado.bind(this);
-        this.redirectEditLancamento = this.redirectEditLancamento.bind(this);
         this.removeLancamento = this.removeLancamento.bind(this);
         this.transformDataToTable = this.transformDataToTable.bind(this);
     }
@@ -48,7 +47,6 @@ export default class ListLancamentos extends React.Component<ListLancamentosProp
     componentDidMount(){
         LancamentoService.listaLancamentos()
             .then(res => {
-                
                 const lancamentos = res.data;
                 this.setState({ lancamentos });
                 this.transformDataToTable(lancamentos);
@@ -73,10 +71,6 @@ export default class ListLancamentos extends React.Component<ListLancamentosProp
         }
     }
 
-    redirectEditLancamento() : void{
-        window.location.href = `lancamentos/edit/${this.state.lancamentoSelecionado.id}`;
-    }
-
     transformDataToTable( dados : any ) : void {
         const json : any = [];
         if(dados){ 
@@ -84,7 +78,7 @@ export default class ListLancamentos extends React.Component<ListLancamentosProp
                 json.push({ id : dado.id,
                             conta_credito : dado.conta_credito.descricao,
                             conta_debito : dado.conta_debito.descricao,
-                            valor : dado.valor,
+                            valor : valorFormatoBrasileiro(dado.valor),
                             historico : dado.historico ? dado.historico : ""
                 })
             })
@@ -96,12 +90,13 @@ export default class ListLancamentos extends React.Component<ListLancamentosProp
         return (
             <div className="fadeIn">
                 <Titulo texto="Lançamentos"/>
-
+                
+                {/* Passar Labels Titulos */}
                 <Table dados={this.state.dadosTabela} selecionado={this.state.lancamentoSelecionado} setSelecionado={this.setLancamentoSelecionado} />
 
                 <div className="col-4 mt-3">
-                    <Link to="/aluno/novo"> <button type="button" className="btn btn-primary">Novo</button> </Link>
-                    <button type="button" className="btn btn-info ml-1" disabled={!this.state.lancamentoSelecionado} onClick={this.redirectEditLancamento}>Alterar</button>
+                    <Link to="/lancamentos/novo"> <button type="button" className="btn btn-primary">Novo</button> </Link>
+                    <Link to={`lancamentos/edit/${this.state.lancamentoSelecionado.id}`}> <button type="button" className="btn btn-info ml-1" disabled={!this.state.lancamentoSelecionado}>Alterar</button> </Link>
                     <button type="button" className="btn btn-danger ml-1" disabled={!this.state.lancamentoSelecionado} onClick={this.removeLancamento}>Excluir</button>
                 </div>
             </div>
