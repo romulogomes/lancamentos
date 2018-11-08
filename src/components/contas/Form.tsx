@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { Form } from 'react-final-form'
-import Alerta from '../Alerta';
+import Alerta, { AlertaModel } from '../Alerta';
 import InputText from '../Input';
 import Select, { OptionSelect } from '../Select';
 import BotoesCrud from '../BotoesCrud';
@@ -15,9 +15,11 @@ interface State{
   natureza: string;
   codigo: string;
   classificacao: string;
+  sucesso: AlertaModel;
+  alerta: AlertaModel;
 }
 
-export default class FormContas extends React.Component<FormContasProps, any> {
+export default class FormContas extends React.Component<FormContasProps, State> {
     constructor(props) {
       super(props);
       
@@ -78,8 +80,10 @@ export default class FormContas extends React.Component<FormContasProps, any> {
       const optionsClassificacao = [{value : "Ativo", label: "Ativo" }, {value : "Passivo", label: "Passivo" }]
       return (
         <div className="fadeIn mt-4 p-4">
+            
             <Alerta tipo="sucesso" show={this.state.sucesso.ativo} mensagem={this.state.sucesso.mensagem} clickFechar={() => this.dismissAlert('sucesso')} />
             <Alerta tipo="alerta" show={this.state.alerta.ativo} mensagem={this.state.alerta.mensagem} clickFechar={() => this.dismissAlert('alerta')} />
+            
             <Form onSubmit={this.salvarConta}
                     initialValues={{ descricao: this.state.descricao, codigo: this.state.codigo, natureza: this.state.natureza, classificacao: this.state.classificacao}}
                     render={({ handleSubmit, form, submitting, pristine}) => (
@@ -93,7 +97,6 @@ export default class FormContas extends React.Component<FormContasProps, any> {
                                     <Select label="Natureza" name="natureza" options={optionsNatureza} />
                                 </div>
                             </div>
-                            
                             <div className="row">
                                 <div className="col-6 pl-3">
                                   <Select label="Classificação" name="classificacao" options={optionsClassificacao} />
