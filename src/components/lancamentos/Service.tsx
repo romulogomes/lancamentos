@@ -10,7 +10,7 @@ class LancamentoService {
         return axios.get(this.url_lancamentos);
     }
     
-    getInfosLancamento(idLancamento : number): AxiosPromise<Lancamento>{
+    getInfosLancamento(idLancamento : number): AxiosPromise{
         return axios.get(this.url_lancamentos + idLancamento);
     }
     
