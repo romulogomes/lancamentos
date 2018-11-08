@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Field } from 'react-final-form'
+import { Field } from 'react-final-form-html5-validation'
 import numeral from 'numeral'
 
 numeral.register('locale', 'pt-br', {
@@ -43,6 +43,8 @@ export interface InputMoneyProps {
     name: string;
     placeholder?: string;
     label? :string;
+    required? : boolean
+    mensagem_required?: string;
 }
 
 const formatPrice = value => {
@@ -56,10 +58,17 @@ const formatPrice = value => {
 
 export default class InputMoney extends React.Component<InputMoneyProps, any> {
   public render() {
+    const { name, placeholder, required, mensagem_required} = this.props
     return (
         <div>
             <label htmlFor={this.props.name}>{this.props.label}</label>
-            <Field name={this.props.name} component="input" className="form-control" type="text" format={formatPrice} formatOnBlur placeholder={this.props.placeholder} />
+            <Field name={this.props.name} 
+                   component="input" className="form-control" type="text" 
+                   format={formatPrice} 
+                   formatOnBlur 
+                   placeholder={this.props.placeholder}
+                   required={required} 
+                   valueMissing={mensagem_required ? mensagem_required : "Necessário preencher esse campo"}  />
         </div>
     );
   }

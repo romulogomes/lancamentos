@@ -18,7 +18,8 @@ export default class InputText extends React.Component<InputProps, any> {
             <Field name={name} 
                 required={required} 
                 valueMissing={mensagem_required ? mensagem_required : "Necessário preencher esse campo"} 
-                component="input" type={tipo ? tipo : "text"} 
+                component="input" 
+                type={tipo ? tipo : "text"} 
                 className="form-control" 
             />
         </div>

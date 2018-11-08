@@ -90,15 +90,15 @@ export default class FormContas extends React.Component<FormContasProps, State> 
 
                             <div className="row">
                                 <div className="col-7">
-                                    <InputText label="Descrição" name="descricao" tipo="text" required/>      
+                                    <InputText label="Descrição" name="descricao" tipo="text" mensagem_required="Preencha a descrição da Conta" required/>      
                                 </div>
                                 <div className="col-5">
-                                    <Select label="Natureza" name="natureza" options={optionsNatureza}/>
+                                    <Select label="Natureza" name="natureza" options={optionsNatureza} mensagem_required="Preencha a Natureza da Conta" required />
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="col-6 pl-3">
-                                  <Select label="Classificação" name="classificacao" options={optionsClassificacao} />
+                                  <Select label="Classificação" name="classificacao" options={optionsClassificacao} required/>
                                 </div>
                                 <div className="col-6 pl-3">
                                   <InputText label="Codigo" name="codigo" tipo="text" required/>

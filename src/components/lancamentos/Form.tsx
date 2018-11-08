@@ -137,21 +137,21 @@ export default class FormLancamentos extends React.Component<FormLancamentosProp
                     render={({ handleSubmit, form, submitting, pristine}) => (
                         <form onSubmit={handleSubmit}>
                         
-                            <Select label="Crédito" name="conta_credito" options={this.state.options} />
+                            <Select label="Crédito" name="conta_credito" options={this.state.options} mensagem_required="Selecione uma conta para Crédito" required/>
 
-                            <Select label="Débito" name="conta_debito" options={this.state.options} />
+                            <Select label="Débito" name="conta_debito" options={this.state.options} mensagem_required="Selecione uma conta para Débito" required />
                             
                             <div className="row">
                                 <div className="col-3">
-                                    <InputText label="Data" name="data" tipo="date" />
+                                    <InputText label="Data" name="data" tipo="date" required/>
                                 </div>
 
                                 <div className="col-2 pl-3">
-                                    <InputMoney label="Valor" name="valor" placeholder="0,00" />
+                                    <InputMoney label="Valor" name="valor" placeholder="0,00" mensagem_required="Digite o Valor" required/>
                                 </div>
 
                                 <div className="col-7 pl-3">
-                                    <InputText label="Histórico" name="historico" tipo="text" />
+                                    <InputText label="Histórico" name="historico" tipo="text" required/>
                                 </div>
                             </div>
 
