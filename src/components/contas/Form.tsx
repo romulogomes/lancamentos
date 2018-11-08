@@ -18,19 +18,36 @@ interface State{
 }
 
 export default class FormContas extends React.Component<FormContasProps, any> {
-  constructor(props) {
-    super(props);
-    
-    this.state = {
-        idConta : props.match.params.id ? props.match.params.id : 0,
-        descricao : '',
-        natureza : '', 
-        codigo: '',
-        classificacao : '',
-        sucesso : { ativo : false, mensagem : ''},
-        alerta : { ativo : false, mensagem : ''},
-    }  
-  }
+    constructor(props) {
+      super(props);
+      
+      this.state = {
+          idConta : props.match.params.id ? props.match.params.id : 0,
+          descricao : '',
+          natureza : '', 
+          codigo: '',
+          classificacao : '',
+          sucesso : { ativo : false, mensagem : ''},
+          alerta : { ativo : false, mensagem : ''},
+      }  
+
+      this.salvarConta = this.salvarConta.bind(this);
+    }
+
+    componentDidMount(): void{
+      if(this.state.idConta)
+        this.getInfosConta();
+    }
+
+    getInfosConta(): void{
+      ContaService.getInfosConta(this.state.idConta)
+          .then(res => {
+              console.log(res.data);
+              const conta = res.data;
+              this.setState({ descricao : conta.descricao, natureza: conta.natureza, classificacao : conta.classificacao, codigo : conta.codigo });
+              
+          }).catch(erro => { console.log(erro)})
+    }
   
     dismissAlert(alert: string): void{
       if(alert === 'alerta')
@@ -41,8 +58,8 @@ export default class FormContas extends React.Component<FormContasProps, any> {
 
     salvarConta(dados : any): void{  
       debugger      
-      if(this.state.idLancamento){
-          dados.id = this.state.idLancamento;
+      if(this.state.idConta){
+          dados.id = this.state.idConta;
           ContaService.editarConta(dados)
               .then(res => {
                   this.setState( {sucesso : { ativo : true, mensagem : "Editado com Sucesso"}, alerta : { ativo : false} });
@@ -56,19 +73,15 @@ export default class FormContas extends React.Component<FormContasProps, any> {
       }
     }
 
-    
-
     public render() {
       const optionsNatureza = [{value : "D", label: "Devedora" }, {value : "C", label: "Credora" }];
       const optionsClassificacao = [{value : "Ativo", label: "Ativo" }, {value : "Passivo", label: "Passivo" }]
-
       return (
         <div className="fadeIn mt-4 p-4">
             <Alerta tipo="sucesso" show={this.state.sucesso.ativo} mensagem={this.state.sucesso.mensagem} clickFechar={() => this.dismissAlert('sucesso')} />
             <Alerta tipo="alerta" show={this.state.alerta.ativo} mensagem={this.state.alerta.mensagem} clickFechar={() => this.dismissAlert('alerta')} />
-
             <Form onSubmit={this.salvarConta}
-                    // initialValues={{ historico: this.state.historico}}
+                    initialValues={{ descricao: this.state.descricao, codigo: this.state.codigo, natureza: this.state.natureza, classificacao: this.state.classificacao}}
                     render={({ handleSubmit, form, submitting, pristine}) => (
                         <form onSubmit={handleSubmit}>
 
@@ -81,7 +94,6 @@ export default class FormContas extends React.Component<FormContasProps, any> {
                                 </div>
                             </div>
                             
-                            
                             <div className="row">
                                 <div className="col-6 pl-3">
                                   <Select label="Classificação" name="classificacao" options={optionsClassificacao} />
@@ -90,7 +102,7 @@ export default class FormContas extends React.Component<FormContasProps, any> {
                                   <InputText label="Codigo" name="codigo" tipo="text" />
                                 </div>
                             </div>
-                          <hr></hr>
+
                             <BotoesCrud labelCadastrar="Salvar" linkVoltar="/contas" submitting={submitting} pristine={pristine}/>
                         </form>
                     )}
