@@ -19,6 +19,9 @@ interface State{
   alerta: AlertaModel;
 }
 
+export const optionsNatureza = [{value : "D", label: "Devedora" }, {value : "C", label: "Credora" }];
+export const optionsClassificacao = [{value : "Ativo", label: "Ativo" }, {value : "Passivo", label: "Passivo" }, {value : "Receitas", label: "Receitas" }, {value : "Despesas", label: "Despesas" }]
+
 export default class FormContas extends React.Component<FormContasProps, State> {
     constructor(props) {
       super(props);
@@ -74,9 +77,9 @@ export default class FormContas extends React.Component<FormContasProps, State> 
       }
     }
 
+    
+
     public render() {
-      const optionsNatureza = [{value : "D", label: "Devedora" }, {value : "C", label: "Credora" }];
-      const optionsClassificacao = [{value : "Ativo", label: "Ativo" }, {value : "Passivo", label: "Passivo" }]
       return (
         <div className="fadeIn mt-4 p-4">
             
@@ -93,12 +96,12 @@ export default class FormContas extends React.Component<FormContasProps, State> 
                                     <InputText label="Descrição" name="descricao" tipo="text" mensagem_required="Preencha a descrição da Conta" required/>      
                                 </div>
                                 <div className="col-5">
-                                    <Select label="Natureza" name="natureza" options={optionsNatureza} mensagem_required="Preencha a Natureza da Conta" required />
+                                    <Select label="Classificação" name="classificacao" options={optionsClassificacao} required/>
                                 </div>
                             </div>
                             <div className="row">
                                 <div className="col-6 pl-3">
-                                  <Select label="Classificação" name="classificacao" options={optionsClassificacao} required/>
+                                <Select label="Natureza" name="natureza" options={optionsNatureza} mensagem_required="Preencha a Natureza da Conta" required />
                                 </div>
                                 <div className="col-6 pl-3">
                                   <InputText label="Codigo" name="codigo" tipo="text" required/>
