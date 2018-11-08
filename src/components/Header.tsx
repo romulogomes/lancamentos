@@ -16,7 +16,7 @@ export default class Header extends React.Component<HeaderProps, any> {
                 <div className="collapse navbar-collapse" id="navbarNav">
                     <ul className="navbar-nav">
                         <li className="nav-item active ">
-                            <Link to="/aluno" className="nav-link color_white">Contas</Link>
+                            <Link to="/contas" className="nav-link color_white">Contas</Link>
                         </li>
                     
                         <li className="nav-item ">
