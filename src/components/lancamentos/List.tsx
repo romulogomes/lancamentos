@@ -24,6 +24,16 @@ interface State {
     dadosTabela : DadosTabela[];
 }
 
+
+export function formataData(valor): string{
+    let data = new Date(valor);
+    let dia = data.getDate() < 10? `0${data.getDate()}`: data.getDate();
+    let mes = data.getUTCMonth()+1 < 10? `0${data.getUTCMonth()+1}` : data.getUTCMonth()+1;
+    let ano = data.getFullYear();
+    // debugger
+    return `${dia}/${mes}/${ano}`;
+}
+
 export default class ListLancamentos extends React.Component<ListLancamentosProps, State> {
     constructor(props) {
         super(props);
@@ -75,7 +85,7 @@ export default class ListLancamentos extends React.Component<ListLancamentosProp
                             conta_debito : dado.conta_debito.descricao,
                             valor : valorFormatoBrasileiro(dado.valor),
                             historico : dado.historico ? dado.historico : "",
-                            data : dado.data ? dado.data : ""
+                            data : dado.data ? formataData(dado.data) : ""
                 })
             })
         }
