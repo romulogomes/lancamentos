@@ -1,14 +1,12 @@
 import * as React from 'react';
 import { Form } from 'react-final-form'
-import Alerta from '../Alerta';
+import Alerta, { AlertaModel } from '../Alerta';
 import InputMoney, { replaceAll, valorFormatoBrasileiro } from '../InputMoney';
 import BotoesCrud from '../BotoesCrud';
 import InputText from '../Input';
 import LancamentoService from './Service'
 import ContaService from './../contas/Service'
-import Select from '../Select';
-import { Lancamento} from './List';
-import { number } from 'prop-types';
+import Select, { OptionSelect } from '../Select';
 import { Conta } from '../contas/List';
 
 export interface FormLancamentosProps {
@@ -23,8 +21,20 @@ export interface FormLancamentosModel {
     data: Date;
 }
 
+interface State {
+    idLancamento: number;
+    historico: string;
+    conta_credito: {},
+    conta_debito: {},
+    valor: number;
+    data: Date;
+    sucesso: AlertaModel;
+    alerta: AlertaModel;
+    options: OptionSelect[];
+    contas: Conta[];
+}
 
-export default class FormLancamentos extends React.Component<FormLancamentosProps, any> {
+export default class FormLancamentos extends React.Component<FormLancamentosProps, State> {
     constructor(props) {
         super(props);
         
@@ -33,11 +43,12 @@ export default class FormLancamentos extends React.Component<FormLancamentosProp
             historico : '',
             conta_credito : {}, 
             conta_debito: {},
-            valor : 0,
-            data : "",
+            valor: 0,
+            data: new Date(),
             sucesso : { ativo : false, mensagem : ''},
             alerta : { ativo : false, mensagem : ''},
             options : [],
+            contas: []
         }
 
         this.salvarLancamento = this.salvarLancamento.bind(this);
@@ -80,7 +91,7 @@ export default class FormLancamentos extends React.Component<FormLancamentosProp
         this.setState({options});   
     }
 
-    formatarValores( valor ){
+    formatarValores( valor: string): number{
         if(valor){
             if(valor.toString().indexOf(",") != -1) {
                 valor = replaceAll(valor, ".", "");
