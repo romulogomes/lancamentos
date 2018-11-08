@@ -7,7 +7,10 @@ export interface AlertaProps {
     clickFechar() : void 
 }
 
-
+export interface AlertaModel{
+    ativo : boolean;
+    mensagem? : string;
+}
 export default class Alerta extends React.Component<AlertaProps, any> {
   public render() {
     return (
