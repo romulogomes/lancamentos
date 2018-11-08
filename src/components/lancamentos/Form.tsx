@@ -22,15 +22,14 @@ export default class FormLancamentos extends React.Component<FormLancamentosProp
             conta_credito : {}, 
             conta_debito: {},
             valor : 0,
+            data : "",
             sucesso : { ativo : false, mensagem : ''},
             alerta : { ativo : false, mensagem : ''},
             options : [],
         }
 
         this.salvarLancamento = this.salvarLancamento.bind(this);
-        // this.selecionaOrientador = this.selecionaOrientador.bind(this);
         this.dismissAlert = this.dismissAlert.bind(this);
-        // this.addConta = this.addConta.bind(this);
     }
 
     componentDidMount(): void{
@@ -50,7 +49,7 @@ export default class FormLancamentos extends React.Component<FormLancamentosProp
             .then(res => {
                 console.log(res.data);
                 const Lancamento = res.data;
-                this.setState({ historico : Lancamento.historico, valor: Lancamento.valor, 
+                this.setState({ historico : Lancamento.historico, valor: Lancamento.valor, data : Lancamento.data, 
                                 conta_credito : Lancamento.conta_credito.id, 
                                 conta_debito : Lancamento.conta_debito.id,
                              });
@@ -81,18 +80,18 @@ export default class FormLancamentos extends React.Component<FormLancamentosProp
 
     
 
-    salvarLancamento(dados : any) : void{        
-        const jsonSend : any = { conta_credito : dados.conta_credito, conta_debito : dados.conta_debito, valor: this.formatarValores(dados.valor), historico: dados.historico };
-
+    salvarLancamento(dados : any): void{        
+        dados.valor = this.formatarValores(dados.valor);
+        
         if(this.state.idLancamento){
-            jsonSend.id = this.state.idLancamento;
-            LancamentoService.editarLancamento(jsonSend)
+            dados.id = this.state.idLancamento;
+            LancamentoService.editarLancamento(dados)
                 .then(res => {
                     this.setState( {sucesso : { ativo : true, mensagem : "Editado com Sucesso"}, alerta : { ativo : false} });
                 }).catch(erro => { console.log(erro); })    
         }
         else{        
-            LancamentoService.gravaLancamento(jsonSend)
+            LancamentoService.gravaLancamento(dados)
                 .then(res => {
                     this.setState( {sucesso : { ativo : true, mensagem : "Lançamento cadastrado com Sucesso"} , alerta : { ativo : false} });
                 }).catch(erro => { console.log(erro); })
@@ -104,7 +103,7 @@ export default class FormLancamentos extends React.Component<FormLancamentosProp
         return (
             <div className="mt-4 p-4">
                 <Form onSubmit={this.salvarLancamento}
-                    initialValues={{ historico: this.state.historico, valor : valorFormatoBrasileiro(this.state.valor), conta_credito: this.state.conta_credito, conta_debito: this.state.conta_debito }}
+                    initialValues={{ historico: this.state.historico, valor : valorFormatoBrasileiro(this.state.valor), conta_credito: this.state.conta_credito, conta_debito: this.state.conta_debito, data: this.state.data }}
                     render={({ handleSubmit, form, submitting, pristine}) => (
                         <form onSubmit={handleSubmit}>
                                                        
@@ -117,14 +116,24 @@ export default class FormLancamentos extends React.Component<FormLancamentosProp
                             } */}
 
                             {/* <button type="button" className="btn btn-primary" onClick={this.addConta}> Add conta </button> */}
-
+                        
                             <Select label="Crédito" name="conta_credito" options={this.state.options} />
 
                             <Select label="Débito" name="conta_debito" options={this.state.options} />
                             
-                            <InputMoney label="Valor" name="valor" placeholder="0,00" />
+                            <div className="row">
+                                <div className="col-3">
+                                    <InputText label="Data" name="data" tipo="date" />
+                                </div>
 
-                            <InputText label="Historico" name="historico" tipo="text" />
+                                <div className="col-2 pl-3">
+                                    <InputMoney label="Valor" name="valor" placeholder="0,00" />
+                                </div>
+
+                                <div className="col-7 pl-3">
+                                    <InputText label="Histórico" name="historico" tipo="text" />
+                                </div>
+                            </div>
 
                             <BotoesCrud labelCadastrar="Salvar" linkVoltar="/lancamentos" submitting={submitting} pristine={pristine}/>
                         </form>
