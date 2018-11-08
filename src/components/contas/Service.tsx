@@ -9,21 +9,21 @@ class ContaService {
         return axios.get(this.url_contas);
     }
     
-    // getInfosAluno(idAluno : number): AxiosPromise{
-    //     return axios.get(this.url_contas + idAluno);
-    // }
+    getInfosConta(idConta : number): AxiosPromise{
+        return axios.get(this.url_contas + idConta);
+    }
     
-    // gravaLancamento(data: any): AxiosPromise{
-    //     return axios.post( this.url_contas, data);
-    // }
+    gravaConta(data: any): AxiosPromise{
+        return axios.post( this.url_contas, data);
+    }
     
-    // editarLancamento(data : any): AxiosPromise{
-    //     return axios.put(this.url_contas, data);
-    // }
+    editarConta(data : any): AxiosPromise{
+        return axios.put(this.url_contas, data);
+    }
     
-    // removeLancamento(idLancamento : number): AxiosPromise{
-    //     return axios.delete(this.url_contas+idLancamento);
-    // }
+    removeConta(idConta : number): AxiosPromise{
+        return axios.delete(this.url_contas+idConta);
+    }
 }
 
 export default new ContaService();
