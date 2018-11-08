@@ -21,6 +21,9 @@ export interface Lancamento {
     conta_debito: Conta | number;
     valor : number;
     historico? : string;
+    
+    data? : Date
+    // 00
 }
 
 export interface State {
@@ -79,7 +82,8 @@ export default class ListLancamentos extends React.Component<ListLancamentosProp
                             conta_credito : dado.conta_credito.descricao,
                             conta_debito : dado.conta_debito.descricao,
                             valor : valorFormatoBrasileiro(dado.valor),
-                            historico : dado.historico ? dado.historico : ""
+                            historico : dado.historico ? dado.historico : "",
+                            data : dado.data ? dado.data : ""
                 })
             })
         }
