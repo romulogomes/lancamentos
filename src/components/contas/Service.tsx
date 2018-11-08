@@ -1,5 +1,6 @@
 import axios, { AxiosPromise } from 'axios';
 import { API_URL } from '../../ApiUrl'
+import { Conta } from './List';
 
 class ContaService {
 

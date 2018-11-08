@@ -58,7 +58,7 @@ export default class FormLancamentos extends React.Component<FormLancamentosProp
     componentDidMount(): void{
         ContaService.listaContas()
             .then(res => {
-                const contas = res.data;
+                const contas : Conta[] = res.data;
                 this.setState({ contas });
                 this.transformOptions(contas);
             }).catch(erro =>{ console.log(erro) })

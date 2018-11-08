@@ -58,8 +58,7 @@ export default class FormContas extends React.Component<FormContasProps, State> 
           this.setState({ sucesso:  { ativo : false } })
     }
 
-    salvarConta(dados : any): void{  
-      debugger      
+    salvarConta(dados : any): void{      
       if(this.state.idConta){
           dados.id = this.state.idConta;
           ContaService.editarConta(dados)

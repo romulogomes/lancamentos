@@ -31,7 +31,7 @@ export default class ListContas extends React.Component<ListContasProps, State> 
         
         this.setContaSelecionada = this.setContaSelecionada.bind(this);
         this.removeConta = this.removeConta.bind(this);
-      }
+    }
 
     componentDidMount(): void{
         ContaService.listaContas()
