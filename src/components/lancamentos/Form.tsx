@@ -94,6 +94,11 @@ export default class FormLancamentos extends React.Component<FormLancamentosProp
         // dados.valor = this.formatarValores(dados.valor);
         const jsonSend : FormLancamentosModel = { conta_credito : dados.conta_credito, conta_debito : dados.conta_debito, valor: this.formatarValores(dados.valor), historico: dados.historico, data: dados.data };
         
+        if(!jsonSend.conta_credito || !jsonSend.conta_debito || !jsonSend.valor || !jsonSend.data){
+            this.setState({ alerta : { ativo : true, mensagem : 'Preencha todos os campos' }, sucesso : { ativo : false }})
+            return;
+        }
+
         if(this.state.idLancamento){
             jsonSend.id = this.state.idLancamento;
             LancamentoService.editarLancamento(jsonSend)
@@ -109,15 +114,15 @@ export default class FormLancamentos extends React.Component<FormLancamentosProp
         }
     }
 
-
     public render() {
+        const { historico, valor, conta_credito, conta_debito, data } = this.state;
         return (
             <div className="mt-4 p-4">
                 <Alerta tipo="sucesso" show={this.state.sucesso.ativo} mensagem={this.state.sucesso.mensagem} clickFechar={() => this.dismissAlert('sucesso')} />
                 <Alerta tipo="alerta" show={this.state.alerta.ativo} mensagem={this.state.alerta.mensagem} clickFechar={() => this.dismissAlert('alerta')} />
 
                 <Form onSubmit={this.salvarLancamento}
-                    initialValues={{ historico: this.state.historico, valor : valorFormatoBrasileiro(this.state.valor), conta_credito: this.state.conta_credito, conta_debito: this.state.conta_debito, data: this.state.data }}
+                    initialValues={{ historico: historico, valor : valorFormatoBrasileiro(valor), conta_credito: conta_credito, conta_debito: conta_debito, data: data }}
                     render={({ handleSubmit, form, submitting, pristine}) => (
                         <form onSubmit={handleSubmit}>
                         
