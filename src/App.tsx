@@ -4,6 +4,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom'
 import Header from './components/Header';
 import ListLancamentos from './components/lancamentos/List';
 import FormLancamentos from './components/lancamentos/Form';
+import ListContas from './components/contas/List';
 
 class App extends Component {
   render() {
@@ -12,6 +13,8 @@ class App extends Component {
         <div className="App">
           <Header />
           
+          <Route path="/contas"                 exact={true} component={ListContas} />
+
           <Route path="/lancamentos"            exact={true} component={ListLancamentos} />
           <Route path="/lancamentos/novo/"                   component={FormLancamentos} />
           <Route path="/lancamentos/edit/:id"                component={FormLancamentos} />
