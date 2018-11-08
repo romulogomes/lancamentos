@@ -63,13 +63,13 @@ export default class FormContas extends React.Component<FormContasProps, State> 
           dados.id = this.state.idConta;
           ContaService.editarConta(dados)
               .then(res => {
-                  this.setState( {sucesso : { ativo : true, mensagem : "Editado com Sucesso"}, alerta : { ativo : false} });
+                  this.setState( {sucesso : { ativo : true, mensagem : "Conta Editada com Sucesso"}, alerta : { ativo : false} });
               }).catch(erro => { console.log(erro); })    
       }
       else{        
         ContaService.gravaConta(dados)
               .then(res => {
-                  this.setState( {sucesso : { ativo : true, mensagem : "Lançamento cadastrado com Sucesso"} , alerta : { ativo : false} });
+                  this.setState( {sucesso : { ativo : true, mensagem : "Conta cadastrada com Sucesso"} , alerta : { ativo : false} });
               }).catch(erro => { console.log(erro); })
       }
     }
@@ -90,10 +90,10 @@ export default class FormContas extends React.Component<FormContasProps, State> 
 
                             <div className="row">
                                 <div className="col-7">
-                                    <InputText label="Descrição" name="descricao" tipo="text" />      
+                                    <InputText label="Descrição" name="descricao" tipo="text" required/>      
                                 </div>
                                 <div className="col-5">
-                                    <Select label="Natureza" name="natureza" options={optionsNatureza} />
+                                    <Select label="Natureza" name="natureza" options={optionsNatureza}/>
                                 </div>
                             </div>
                             <div className="row">
@@ -101,7 +101,7 @@ export default class FormContas extends React.Component<FormContasProps, State> 
                                   <Select label="Classificação" name="classificacao" options={optionsClassificacao} />
                                 </div>
                                 <div className="col-6 pl-3">
-                                  <InputText label="Codigo" name="codigo" tipo="text" />
+                                  <InputText label="Codigo" name="codigo" tipo="text" required/>
                                 </div>
                             </div>
 
