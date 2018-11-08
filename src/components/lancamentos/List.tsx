@@ -4,15 +4,9 @@ import Table, { DadosTabela } from '../Table';
 import Titulo from '../Titulo';
 import { Link } from 'react-router-dom';
 import { valorFormatoBrasileiro } from '../InputMoney';
+import { Conta } from '../contas/List';
 
 export interface ListLancamentosProps {
-}
-
-export interface Conta {
-    id: number;
-    descricao: string;
-    natureza: string;
-    codigo: string;
 }
 
 export interface Lancamento {
@@ -47,7 +41,7 @@ export default class ListLancamentos extends React.Component<ListLancamentosProp
         this.transformDataToTable = this.transformDataToTable.bind(this);
     }
 
-    componentDidMount(){
+    componentDidMount(): void{
         LancamentoService.listaLancamentos()
             .then(res => {
                 const lancamentos = res.data;
