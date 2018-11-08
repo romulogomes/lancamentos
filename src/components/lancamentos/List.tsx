@@ -15,12 +15,10 @@ export interface Lancamento {
     conta_debito: Conta | number;
     valor : number;
     historico? : string;
-    
-    data? : Date
-    // 00
+    data : Date;
 }
 
-export interface State {
+interface State {
     lancamentos : Lancamento[];
     lancamentoSelecionado : Lancamento;
     dadosTabela : DadosTabela[];
@@ -32,7 +30,7 @@ export default class ListLancamentos extends React.Component<ListLancamentosProp
         
         this.state = {
             lancamentos: [],
-            lancamentoSelecionado : { id: 0, conta_credito: 0, conta_debito : 0, valor : 0},
+            lancamentoSelecionado : { id: 0, conta_credito: 0, conta_debito : 0, valor : 0, data: new Date()},
             dadosTabela : []
         }
 
@@ -52,11 +50,11 @@ export default class ListLancamentos extends React.Component<ListLancamentosProp
             })
     }
 
-    setLancamentoSelecionado(lancamento : Lancamento) : void{
-        this.setState({lancamentoSelecionado : lancamento === this.state.lancamentoSelecionado ? { id: 0, conta_credito: 0, conta_debito : 0, valor : 0}  : lancamento });    
+    setLancamentoSelecionado(lancamento : Lancamento): void{
+        this.setState({lancamentoSelecionado : lancamento === this.state.lancamentoSelecionado ? { id: 0, conta_credito: 0, conta_debito : 0, valor : 0, data: new Date()}  : lancamento });    
     }
 
-    removeLancamento() : void{
+    removeLancamento(): void{
         if (window.confirm("Confirma deletar Lançamento?")) {
             LancamentoService.removeLancamento(this.state.lancamentoSelecionado.id) 
               .then(res => {
@@ -68,8 +66,8 @@ export default class ListLancamentos extends React.Component<ListLancamentosProp
         }
     }
 
-    transformDataToTable( dados : any ) : void {
-        const json : any = [];
+    transformDataToTable(dados: any): void {
+        const json: any = [];
         if(dados){ 
             dados.forEach( function (dado) {
                 json.push({ id : dado.id,
